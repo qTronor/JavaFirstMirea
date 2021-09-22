@@ -1,6 +1,6 @@
-package ru.mirea.task6.test;
+package ru.mirea.task6.nameable;
 
-class Planet implements Nameable{
+class Planet implements Nameable {
     private String name;
     private int number;
     Planet(String name, int number){

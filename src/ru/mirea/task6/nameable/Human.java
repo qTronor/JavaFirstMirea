@@ -1,4 +1,4 @@
-package ru.mirea.task6.test;
+package ru.mirea.task6.nameable;
 
 public class Human {
     private String name;
