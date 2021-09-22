@@ -1,4 +1,4 @@
-package ru.mirea.task1.opt1;
+package ru.mirea.task1.opt1.num4;
 
 public class Num4 {
     public static void main(String[] args) {
