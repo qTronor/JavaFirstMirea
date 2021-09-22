@@ -15,4 +15,11 @@ public class Circle {
     public void setRadius(int radius) {
         this.radius = radius;
     }
+
+    @Override
+    public String toString() {
+        return "Circle{" +
+                "radius=" + radius +
+                '}';
+    }
 }
