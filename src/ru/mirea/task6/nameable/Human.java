@@ -1,6 +1,6 @@
 package ru.mirea.task6.nameable;
 
-public class Human {
+public class Human implements Nameable {
     private String name;
     private String surname;
     private int age;
