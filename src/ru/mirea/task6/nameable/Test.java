@@ -1,4 +1,4 @@
-package ru.mirea.task6.test;
+package ru.mirea.task6.nameable;
 
 import java.lang.*;
 public class Test {
