@@ -4,8 +4,9 @@ public class Head {
     private String hairColor;
     private boolean hair;
 
-    public Head(boolean h){
-        hair = h;
+    public Head(String hairColor, boolean hair){
+        this.hairColor = hairColor;
+        this.hair = hair;
     }
 
     public String getHairColor() {
@@ -16,4 +17,15 @@ public class Head {
         this.hairColor = hairColor;
     }
 
+    public void setHair(boolean hair) {
+        this.hair = hair;
+    }
+
+    @Override
+    public String toString() {
+        return "Head{" +
+                "hairColor='" + hairColor + '\'' +
+                ", hair=" + hair +
+                '}';
+    }
 }
