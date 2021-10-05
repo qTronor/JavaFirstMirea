@@ -1,26 +1,32 @@
 package ru.mirea.task8.t1;
 
 
-import java.lang.*;
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
 
 public class Rectangle extends Shape {
-    protected double width;
-    protected double length;
+    protected final double width;
+    protected final double length;
 
-    public Rectangle(){
-        this.position = 0;
-        this.color = "blue";
-        width = 1;
-        length = 1;
-    }
-    public Rectangle(double width, double length){
+    public Rectangle( double x, double y, Color color, double width, double length){
+        super(x, y, color);
         this.width = width;
         this.length = length;
     }
-    public  Rectangle(double width, double length, String color, double position){
-        this.width = width;
-        this.length = length;
-        this.color = color;
-        this.position = position;
+
+    public double getLength() {
+        return length;
+    }
+
+    public double getWidth() {
+        return width;
+    }
+
+    @Override
+    void draw(Graphics g) {
+        Graphics2D graphics2D = (Graphics2D)  g;
+        Rectangle2D.Double rec = new Rectangle2D.Double(x, y, length, width);
+        graphics2D.setColor(color);
+        graphics2D.fill(rec);
     }
 }
