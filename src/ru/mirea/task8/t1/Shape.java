@@ -1,33 +1,24 @@
 package ru.mirea.task8.t1;
-import java.lang.*;
-
+import java.awt.*;
 public abstract class Shape {
-    protected String color;
-    protected double position;
+    protected final Color color;
+    protected final double x, y;
 
-    public Shape(){
-        this.color = "None";
-        this.position = 0;
-    }
-
-    public Shape(String color, double position){
+    public Shape(double x, double y, Color color){
+        this.x = x;
+        this.y = y;
         this.color = color;
-        this.position = position;
     }
 
-    public String getColor() {
+    public Color getColor() {
         return color;
     }
-
-    public void setColor(String color) {
-        this.color = color;
+    public double getY() {
+        return y;
     }
 
-    public double getPosition() {
-        return position;
+    public double getX() {
+        return x;
     }
-
-    public void setPosition(double position) {
-        this.position = position;
-    }
+    abstract void draw(Graphics g);
 }
