@@ -1,38 +1,64 @@
 package ru.mirea.task11.t1;
 import java.awt.*;
+import java.util.Random;
 import javax.swing.*;
 
 public class T1 {
-    private static final int screenWidth = 800;
-    private static final int screenHeight = 600;
+    private static boolean gameOver = false;
+    private static int count = 0;
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("Game");
 
-        JLabel label1 = new JLabel("Enter Number: ");
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+
+        JLabel label1 = new JLabel("Enter Number from 0 to 20: ");
         label1.setHorizontalAlignment(JLabel.CENTER);
 
-        JLabel label2 = new JLabel(" ");
+        JLabel label2 = new JLabel("");
+        label2.setPreferredSize(new Dimension(600, 25));
 
-        JTextField jta = new JTextField(2 );
-        Font fnt = new Font("Times new roman",Font.BOLD,20);
+        JTextField jta = new JTextField( );
+        jta.setPreferredSize(new Dimension(50, 25));
+        Font fnt = new Font("Stick No Bills",Font.BOLD,20);
         jta.setForeground(Color.BLACK);
         jta.setFont(fnt);
 
+        Random rand = new Random();
+        int randNum = rand.nextInt(20);
 
         JButton button1 = new JButton("Input");
-        button1.setSize(screenWidth/3, 50);
-        button1.setLocation(0, screenHeight /2 - 50);
+        button1.addActionListener(actionEvent ->{
+            if(!gameOver){
+                int num = Integer.parseInt(jta.getText());
+                if(num == randNum){
+                    label2.setText("I are right!  Congrants!");
+                    gameOver = true;
+                }
+                else if(num > randNum){
+                    label2.setText("Try smaller");
+                    count++;
+                }
+                else{
+                    label2.setText("Try bigger");
+                    count++;
+                }
+                if(count >= 5){
+                    label2.setText("Game Over");
+                    gameOver = true;
+                }
+            }
+        });
 
-        frame.add(button1);
-        frame.add(jta, BorderLayout.SOUTH);
-        frame.add(label1, BorderLayout.CENTER);
+        panel.add(button1);
+        panel.add(jta);
+        panel.add(label1);
+        panel.add(label2);
 
-        frame.setSize(screenWidth, screenHeight);
+        frame.add(panel);
+        frame.pack();
         frame.setVisible(true);
-
     }
-    private static void gameManager(JButton button, JLabel label1, JLabel label2, Label text){
 
-    }
 }
