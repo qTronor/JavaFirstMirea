@@ -1,7 +1,4 @@
 package ru.mirea.task8.t1;
-
-import ru.mirea.task6.nameable.Test;
-
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;

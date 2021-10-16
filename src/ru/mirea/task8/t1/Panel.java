@@ -21,7 +21,8 @@ public class Panel extends JPanel {
         this.maxY = maxY;
 
         for (int i = 0; i < num; ++i) {
-            if (i % 2 == 0) {
+            int k = random.nextInt(10);
+            if (k % 2 == 0) {
                 addRectangle();
             } else {
                 addCircle();
