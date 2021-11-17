@@ -34,7 +34,7 @@ public class N2 {
     public void swingAnimator() {
         try {
             for (i = 1; i <= 21; i++) {
-                images = new ImageIcon("C:/Users/Home/OneDrive/Документы/GitHub/JavaFirstMirea/src/ru/mirea/task8/t3/Chin_Chan/Tom (" + i + ").jpg");
+                images = new ImageIcon("src/ru/mirea/task8/t3/Chin_Chan/Tom (" + i + ").jpg");
                 lbl.setIcon(images);
                 th.sleep(80);
             }
