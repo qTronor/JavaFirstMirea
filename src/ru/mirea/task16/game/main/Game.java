@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
 import gfx.Assets;
+import ru.mirea.task16.input.KeyManager;
 import states.GameState;
 import states.GameStateManager;
 import states.MenuState;
@@ -11,7 +12,7 @@ import states.State;
 
 public class Game implements Runnable {
 
-    private Window display;
+    private Window window;
     public int width, height;
     public String title;
 
@@ -25,41 +26,44 @@ public class Game implements Runnable {
     private State gameState;
     private State menuState;
 
+    private KeyManager keyManager;
     public Game(String title, int width, int height){
         this.width = width;
         this.height = height;
         this.title = title;
+
+        keyManager = new KeyManager();
     }
 
     private void init(){
-        display = new Window(title, width, height);
+        window = new Window(title, width, height);
+        window.getFrame().addKeyListener(keyManager);
         Assets.init();
 
-        gameState = new GameState();
-        menuState = new MenuState();
+        gameState = new GameState(this);
+        menuState = new MenuState(this);
         GameStateManager.setState(menuState);
         GameStateManager.setState(gameState);
     }
     private void tick(){
+        keyManager.tick();
         if(GameStateManager.getCurrentState() != null)
             GameStateManager.getCurrentState().tick();
     }
 
     private void render(){
-        bs = display.getCanvas().getBufferStrategy();
+        bs = window.getCanvas().getBufferStrategy();
         if(bs == null){
-            display.getCanvas().createBufferStrategy(3);
+            window.getCanvas().createBufferStrategy(3);
             return;
         }
         g = bs.getDrawGraphics();
-        //Clear Screen
+
         g.clearRect(0, 0, width, height);
-        //Draw Here!
 
         if(GameStateManager.getCurrentState() != null)
             GameStateManager.getCurrentState().render(g);
 
-       //End Drawing!
         bs.show();
         g.dispose();
     }
@@ -95,6 +99,9 @@ public class Game implements Runnable {
 
         stop();
 
+    }
+    public KeyManager getKeyManager(){
+        return keyManager;
     }
 
     public synchronized void start(){
