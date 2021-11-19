@@ -1,8 +1,7 @@
 package states;
 
-import Worlds.World;
+import worlds.World;
 import entities.creatures.Player;
-import gfx.Assets;
 import main.Game;
 
 import java.awt.*;
@@ -14,9 +13,10 @@ public class GameState extends State {
 
     public GameState(Game game){
         super(game);
-        player = new Player(game, 100,100);
-        world = new World("");
+        player = new Player(game, 100, 100);
+        world = new World("src/ru/mirea/task16/res/worlds/world1.txt"); //Вот не понимаю почему тут работает путь от src, а от worlds нет
     }
+
     @Override
     public void tick() {
         world.tick();
@@ -26,7 +26,7 @@ public class GameState extends State {
     @Override
     public void render(Graphics g) {
         world.render(g);
-        g.drawImage(Assets.dirt,0,0,null);
         player.render(g);
     }
+
 }

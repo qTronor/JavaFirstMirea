@@ -4,7 +4,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
 import gfx.Assets;
-import ru.mirea.task16.input.KeyManager;
+import input.KeyManager;
 import states.GameState;
 import states.GameStateManager;
 import states.MenuState;
@@ -22,16 +22,17 @@ public class Game implements Runnable {
     private BufferStrategy bs;
     private Graphics g;
 
-    //states
+    //States
     private State gameState;
     private State menuState;
 
+    //Input
     private KeyManager keyManager;
+
     public Game(String title, int width, int height){
         this.width = width;
         this.height = height;
         this.title = title;
-
         keyManager = new KeyManager();
     }
 
@@ -42,11 +43,12 @@ public class Game implements Runnable {
 
         gameState = new GameState(this);
         menuState = new MenuState(this);
-        GameStateManager.setState(menuState);
         GameStateManager.setState(gameState);
     }
+
     private void tick(){
         keyManager.tick();
+
         if(GameStateManager.getCurrentState() != null)
             GameStateManager.getCurrentState().tick();
     }
@@ -58,12 +60,14 @@ public class Game implements Runnable {
             return;
         }
         g = bs.getDrawGraphics();
-
+        //Clear Screen
         g.clearRect(0, 0, width, height);
+        //Draw Here!
 
         if(GameStateManager.getCurrentState() != null)
             GameStateManager.getCurrentState().render(g);
 
+        //End Drawing!
         bs.show();
         g.dispose();
     }
@@ -72,26 +76,29 @@ public class Game implements Runnable {
 
         init();
 
-        int FPS = 60;
-        double timePerTick = 1000000000 / FPS;
+        int fps = 60;
+        double timePerTick = 1000000000 / fps;
         double delta = 0;
-        long now, lastTime = System.nanoTime(), timer = 0;
+        long now;
+        long lastTime = System.nanoTime();
+        long timer = 0;
         int ticks = 0;
 
         while(running){
             now = System.nanoTime();
-            delta += (now-lastTime)/timePerTick;
-            timer += now - lastTime; //this is for control fps
+            delta += (now - lastTime) / timePerTick;
+            timer += now - lastTime;
             lastTime = now;
 
-            if(delta >= 1) {
+            if(delta >= 1){
                 tick();
                 render();
                 ticks++;
                 delta--;
             }
+
             if(timer >= 1000000000){
-                System.out.println(ticks);
+                System.out.println("FPS: " + ticks);
                 ticks = 0;
                 timer = 0;
             }
@@ -100,6 +107,7 @@ public class Game implements Runnable {
         stop();
 
     }
+
     public KeyManager getKeyManager(){
         return keyManager;
     }
@@ -122,5 +130,4 @@ public class Game implements Runnable {
             e.printStackTrace();
         }
     }
-
 }

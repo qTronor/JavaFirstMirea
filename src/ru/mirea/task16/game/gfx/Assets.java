@@ -14,7 +14,7 @@ public class Assets {
         player = sheet.crop(320, 32, width, height);
         dirt = sheet.crop(0, 448, width, height);
         grass = sheet.crop(0, 480, width, height);
-        stone = sheet.crop(width *14, height*14, width, height);
+        stone = sheet.crop(width * 17, height*14, width, height);
         enemy = sheet.crop(0, 160, width, height);
     }
 

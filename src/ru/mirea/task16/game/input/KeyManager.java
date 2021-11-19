@@ -1,4 +1,4 @@
-package ru.mirea.task16.input;
+package input;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
