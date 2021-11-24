@@ -9,6 +9,7 @@ public class Tile {
     public static Tile grassTile = new GrassTile(0);
     public static Tile dirtTile = new DirtTile(1);
     public static Tile rockTile = new RockTile(2);
+    public static Tile portalTile = new PortalTile(3);
 
     public static final int TILE_WIDTH = 32, TILE_HEIGHT = 32;
     protected BufferedImage texture;
@@ -34,4 +35,5 @@ public class Tile {
     public boolean isSolid(){
         return false;
     }
+    public boolean isPortal() {return  false;}
 }

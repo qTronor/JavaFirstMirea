@@ -24,7 +24,7 @@ public class Utils {
     }
 
     public static int parseInt(String number){
-        try{
+        try{                                    //Если number не цифра, а буква, выводит сообщение об ошибке
             return Integer.parseInt(number);
         }catch(NumberFormatException e){
             e.printStackTrace();

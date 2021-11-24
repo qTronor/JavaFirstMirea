@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
 import gfx.Assets;
+import gfx.GameCamera;
 import input.KeyManager;
 import states.GameState;
 import states.GameStateManager;
@@ -13,7 +14,7 @@ import states.State;
 public class Game implements Runnable {
 
     private Window window;
-    public int width, height;
+    private int width, height;
     public String title;
 
     private boolean running = false;
@@ -29,6 +30,11 @@ public class Game implements Runnable {
     //Input
     private KeyManager keyManager;
 
+    private GameCamera gameCamera;
+
+    //Handler
+    private Handler handler;
+
     public Game(String title, int width, int height){
         this.width = width;
         this.height = height;
@@ -41,8 +47,11 @@ public class Game implements Runnable {
         window.getFrame().addKeyListener(keyManager);
         Assets.init();
 
-        gameState = new GameState(this);
-        menuState = new MenuState(this);
+        gameCamera = new GameCamera(this,0,0);
+        handler = new Handler(this);
+
+        gameState = new GameState(handler);
+        menuState = new MenuState(handler);
         GameStateManager.setState(gameState);
     }
 
@@ -103,9 +112,7 @@ public class Game implements Runnable {
                 timer = 0;
             }
         }
-
         stop();
-
     }
 
     public KeyManager getKeyManager(){
@@ -120,11 +127,23 @@ public class Game implements Runnable {
         thread.start();
     }
 
+    public GameCamera getGameCamera(){
+        return gameCamera;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
     public synchronized void stop(){
         if(!running)
             return;
         running = false;
-        try {
+        try {               //Этот метод приостановит выполнение текущего потока до тех пор, пока другой поток не закончит свое выполнение. Если поток прерывается, бросается InterruptedException
             thread.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
