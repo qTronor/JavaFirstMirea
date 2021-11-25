@@ -10,8 +10,8 @@ public abstract class Creature extends Entity {
 
     public static final int DEFAULT_HEALTH = 10;
     public static final float DEFAULT_SPEED = 3.0f;
-    public static final int DEFAULT_CREATURE_WIDTH = 32,
-            DEFAULT_CREATURE_HEIGHT = 32;
+    public static final int DEFAULT_CREATURE_WIDTH = 48, // При смене текстуры гг, вернуть значения на 32. Найти текстуры
+            DEFAULT_CREATURE_HEIGHT = 48;
 
     protected int health;
     protected float speed;
@@ -38,7 +38,7 @@ public abstract class Creature extends Entity {
             else {
                 x = tx * Tile.TILE_WIDTH - bounds.x - bounds.width - 1;
             }
-                teleport(tx, (int)(y+bounds.y)/Tile.TILE_HEIGHT);
+               // teleport(tx, (int)(y+bounds.y)/Tile.TILE_HEIGHT);
         }
         else if(xMove < 0){
             int tx = (int)(x + xMove + bounds.x) / Tile.TILE_WIDTH;
@@ -48,7 +48,7 @@ public abstract class Creature extends Entity {
             else{
                 x = tx * Tile.TILE_WIDTH + bounds.x + Tile.TILE_WIDTH;
             }
-            teleport(tx, (int)(y + bounds.y + bounds.height)/Tile.TILE_HEIGHT);
+            //teleport(tx, (int)(y + bounds.y + bounds.height)/Tile.TILE_HEIGHT);
         }
     }
     public void moveY(){
@@ -60,7 +60,7 @@ public abstract class Creature extends Entity {
             else{
                 y = ty * Tile.TILE_HEIGHT + bounds.y + Tile.TILE_HEIGHT;
             }
-            teleport((int)(x+bounds.x)/Tile.TILE_WIDTH, ty);
+           // teleport((int)(x+bounds.x)/Tile.TILE_WIDTH, ty);
         }
         else if(yMove > 0){
             int ty = (int)(y + yMove + bounds.y + bounds.height) / Tile.TILE_HEIGHT;
@@ -70,13 +70,13 @@ public abstract class Creature extends Entity {
             else {
                 y = ty * Tile.TILE_HEIGHT - bounds.y - bounds.height - 1;
             }
-            teleport((int)(x+bounds.x+bounds.width)/Tile.TILE_WIDTH, ty);
+           // teleport((int)(x+bounds.x+bounds.width)/Tile.TILE_WIDTH, ty);
         }
     }
     private boolean collisionWithTile(int x, int y){
         return handler.getWorld().getTile(x,y).isSolid();
     }
-    private boolean collisonWithPortal(int x, int y){
+    /*private boolean collisonWithPortal(int x, int y){
         return handler.getWorld().getTile(x,y).isPortal();
     }
     public void teleport(int tx, int ty){
@@ -88,7 +88,7 @@ public abstract class Creature extends Entity {
             y = ty - ty + Tile.TILE_HEIGHT * 1;
             System.out.println("Current y: " +y);
         }
-    }
+    }*/
 
     //GETTERS SETTERS
 
