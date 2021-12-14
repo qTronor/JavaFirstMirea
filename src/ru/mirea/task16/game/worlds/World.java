@@ -1,7 +1,9 @@
 package worlds;
 
+import Items.ItemManager;
 import entities.EntityManager;
 import entities.creatures.Player;
+import entities.statics.Rock;
 import entities.statics.Tree;
 import main.Game;
 import main.Handler;
@@ -16,18 +18,30 @@ public class World {
     private int width, height;
     private int spawnX, spawnY;
     private int[][] tiles;
+    //Entities
     private EntityManager entityManager;
+    // Item
+    private ItemManager itemManager;
 
     public World(Handler handler, String path){
         this.handler = handler;
         entityManager = new EntityManager(handler, new Player(handler, 100, 100));
-        entityManager.addEntity(new Tree(handler, 100, 250));
+        itemManager = new ItemManager(handler);
+        // Temporary entity code!
+        entityManager.addEntity(new Tree(handler, 132, 250));
+        entityManager.addEntity(new Rock(handler, 132, 450));
+        entityManager.addEntity(new Rock(handler, 350, 300));
+        entityManager.addEntity(new Rock(handler, 400, 345));
+        entityManager.addEntity(new Tree(handler, 625, 325));
+
         loadWorld(path);
+
         entityManager.getPlayer().setX(spawnX);
-        entityManager.getPlayer().setX(spawnY);
+        entityManager.getPlayer().setY(spawnY);
     }
 
     public void tick(){
+        itemManager.tick();
         entityManager.tick();
     }
 
@@ -43,13 +57,16 @@ public class World {
                         (int) (y * Tile.TILE_HEIGHT - handler.getGameCamera().getyOffset()));
             }
         }
+        // Items
+        itemManager.render(g);
+        //Entities
         entityManager.render(g);
     }
 
     public Tile getTile(int x, int y){
-        if(x < 0 || y < 0 || x>=width || y >= height){
+        if(x < 0 || y < 0 || x >= width || y >= height)
             return Tile.grassTile;
-        }
+
         Tile t = Tile.tiles[tiles[x][y]];
         if(t == null)
             return Tile.dirtTile;
@@ -72,11 +89,31 @@ public class World {
         }
     }
 
-    public int getHeight() {
+    public int getWidth(){
+        return width;
+    }
+
+    public int getHeight(){
         return height;
     }
 
-    public int getWidth() {
-        return width;
+    public EntityManager getEntityManager() {
+        return entityManager;
+    }
+
+    public Handler getHandler() {
+        return handler;
+    }
+
+    public void setHandler(Handler handler) {
+        this.handler = handler;
+    }
+
+    public ItemManager getItemManager() {
+        return itemManager;
+    }
+
+    public void setItemManager(ItemManager itemManager) {
+        this.itemManager = itemManager;
     }
 }

@@ -1,5 +1,6 @@
 package gfx;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,20 +9,34 @@ public class Assets {
 
     private static final int width = 32, height = 32;
 
-    public static BufferedImage playerStand, dirt, grass, stone, fakeWall, enemy, portal, tree;
+    public static BufferedImage playerStand, dirt, grass, stone, fakeWall, enemy, portal, tree, wood, rock;
 
-    public static List<BufferedImage> player_down; //Generics?
+    public static List<BufferedImage> player_down;
     public static List<BufferedImage> player_up;
     public static List<BufferedImage> player_left;
     public static List<BufferedImage> player_right;
 
+    public static BufferedImage[] zombie_down, zombie_up, zombie_left, zombie_right;
+    public static BufferedImage[] btn_start;
+    public static BufferedImage inventoryScreen;
+
+    public static Font font28;
    // public static List<BufferedImage> tree_variations;
 
 
     public static void init(){
-        SpriteSheet sheet = new SpriteSheet(ImageLoader.loadImage("/textures/sheet.png"));
+        SpriteSheet sheet1 = new SpriteSheet(ImageLoader.loadImage("/textures/sheet1.png"));
         SpriteSheet knightSheet = new SpriteSheet(ImageLoader.loadImage("/textures/knight.png"));
         SpriteSheet treeSheet = new SpriteSheet(ImageLoader.loadImage("/textures/tree.png"));
+        SpriteSheet sheet = new SpriteSheet(ImageLoader.loadImage("/textures/sheet.png"));
+
+        font28 = FontLoader.loadFont("src/ru/mirea/task16/res/fonts/slkscr.ttf", 28);
+        rock = sheet.crop(0, height * 2, width, height);
+
+        inventoryScreen = ImageLoader.loadImage("/textures/inventoryScreen.png");
+
+        wood = sheet.crop(width, height, width, height);
+
         tree = treeSheet.crop(0,0,48,48);
 
         player_down = new ArrayList<BufferedImage>();
@@ -62,13 +77,31 @@ public class Assets {
         tree_variations.add(15, treeSheet.crop(width * 8, height * 5,width * 4,height * 4));
         tree_variations.add(16, treeSheet.crop(width * 12, height * 5,width * 4,height * 4));*/
 
+        btn_start = new BufferedImage[2];
+        btn_start[0] = sheet.crop(width * 6, height * 4, width * 2, height);
+        btn_start[1] = sheet.crop(width * 6, height * 5, width * 2, height);
+
+        zombie_down = new BufferedImage[2];
+        zombie_up = new BufferedImage[2];
+        zombie_left = new BufferedImage[2];
+        zombie_right = new BufferedImage[2];
+
+        zombie_down[0] = sheet.crop(width * 4, height * 2, width, height);
+        zombie_down[1] = sheet.crop(width * 5, height * 2, width, height);
+        zombie_up[0] = sheet.crop(width * 6, height * 2, width, height);
+        zombie_up[1] = sheet.crop(width * 7, height * 2, width, height);
+        zombie_right[0] = sheet.crop(width * 4, height * 3, width, height);
+        zombie_right[1] = sheet.crop(width * 5, height * 3, width, height);
+        zombie_left[0] = sheet.crop(width * 6, height * 3, width, height);
+        zombie_left[1] = sheet.crop(width * 7, height * 3, width, height);
+
         playerStand = knightSheet.crop(0,0,width,height);
-        dirt = sheet.crop(0, 448, width, height);
-        grass = sheet.crop(0, 480, width, height);
-        stone = sheet.crop(width * 17, height*14, width, height);
-        enemy = sheet.crop(0, 160, width, height);
-        portal = sheet.crop(1663, 352, width, height);
-        fakeWall = sheet.crop(width * 18, height*14, width, height);
+        dirt = sheet1.crop(0, 448, width, height);
+        grass = sheet1.crop(0, 480, width, height);
+        stone = sheet1.crop(width * 17, height*14, width, height);
+        enemy = sheet1.crop(0, 160, width, height);
+        portal = sheet1.crop(1663, 352, width, height);
+        fakeWall = sheet1.crop(width * 18, height*14, width, height);
     }
 
 }

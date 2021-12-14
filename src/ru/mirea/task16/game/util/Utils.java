@@ -24,11 +24,13 @@ public class Utils {
     }
 
     public static int parseInt(String number){
-        try{                                    //Если number не цифра, а буква, выводит сообщение об ошибке
+        try{
             return Integer.parseInt(number);
         }catch(NumberFormatException e){
             e.printStackTrace();
+            System.out.println("Something wrong. Check map file" + '\n');
             return 0;
         }
     }
+
 }

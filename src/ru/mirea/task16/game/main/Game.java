@@ -6,6 +6,7 @@ import java.awt.image.BufferStrategy;
 import gfx.Assets;
 import gfx.GameCamera;
 import input.KeyManager;
+import input.MouseManager;
 import states.GameState;
 import states.GameStateManager;
 import states.MenuState;
@@ -13,7 +14,7 @@ import states.State;
 
 public class Game implements Runnable {
 
-    private Window window;
+    private Window display;
     private int width, height;
     public String title;
 
@@ -24,12 +25,14 @@ public class Game implements Runnable {
     private Graphics g;
 
     //States
-    private State gameState;
-    private State menuState;
+    public State gameState;
+    public State menuState;
 
     //Input
     private KeyManager keyManager;
+    private MouseManager mouseManager;
 
+    //Camera
     private GameCamera gameCamera;
 
     //Handler
@@ -40,32 +43,37 @@ public class Game implements Runnable {
         this.height = height;
         this.title = title;
         keyManager = new KeyManager();
+        mouseManager = new MouseManager();
     }
 
     private void init(){
-        window = new Window(title, width, height);
-        window.getFrame().addKeyListener(keyManager);
+        display = new Window(title, width, height);
+        display.getFrame().addKeyListener(keyManager);
+        display.getFrame().addMouseListener(mouseManager);
+        display.getFrame().addMouseMotionListener(mouseManager);
+        display.getCanvas().addMouseListener(mouseManager);
+        display.getCanvas().addMouseMotionListener(mouseManager);
         Assets.init();
 
         handler = new Handler(this);
-        gameCamera = new GameCamera(handler,0,0);
+        gameCamera = new GameCamera(handler, 0, 0);
 
         gameState = new GameState(handler);
         menuState = new MenuState(handler);
-        GameStateManager.setState(gameState);
+        State.setState(menuState);
     }
 
     private void tick(){
         keyManager.tick();
 
-        if(GameStateManager.getCurrentState() != null)
-            GameStateManager.getCurrentState().tick();
+        if(State.getState() != null)
+            State.getState().tick();
     }
 
     private void render(){
-        bs = window.getCanvas().getBufferStrategy();
+        bs = display.getCanvas().getBufferStrategy();
         if(bs == null){
-            window.getCanvas().createBufferStrategy(3);
+            display.getCanvas().createBufferStrategy(3);
             return;
         }
         g = bs.getDrawGraphics();
@@ -73,8 +81,8 @@ public class Game implements Runnable {
         g.clearRect(0, 0, width, height);
         //Draw Here!
 
-        if(GameStateManager.getCurrentState() != null)
-            GameStateManager.getCurrentState().render(g);
+        if(State.getState() != null)
+            State.getState().render(g);
 
         //End Drawing!
         bs.show();
@@ -107,16 +115,34 @@ public class Game implements Runnable {
             }
 
             if(timer >= 1000000000){
-                System.out.println("FPS: " + ticks);
+                System.out.println("Ticks and Frames: " + ticks);
                 ticks = 0;
                 timer = 0;
             }
         }
+
         stop();
+
     }
 
     public KeyManager getKeyManager(){
         return keyManager;
+    }
+
+    public MouseManager getMouseManager(){
+        return mouseManager;
+    }
+
+    public GameCamera getGameCamera(){
+        return gameCamera;
+    }
+
+    public int getWidth(){
+        return width;
+    }
+
+    public int getHeight(){
+        return height;
     }
 
     public synchronized void start(){
@@ -127,23 +153,11 @@ public class Game implements Runnable {
         thread.start();
     }
 
-    public GameCamera getGameCamera(){
-        return gameCamera;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
     public synchronized void stop(){
         if(!running)
             return;
         running = false;
-        try {               //Этот метод приостановит выполнение текущего потока до тех пор, пока другой поток не закончит свое выполнение. Если поток прерывается, бросается InterruptedException
+        try {
             thread.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
