@@ -43,7 +43,7 @@ public class Drunker5 {
                 JOptionPane.showMessageDialog(
                         frame,
                         "First string: " + firstPlayerField.getText() + "\nSecond string: " + secondPlayerField.getText(),
-                        "Invalid input",
+                        "Invalid ru.mirea.task16.pixelGame.input",
                         JOptionPane.ERROR_MESSAGE
                 );
             }

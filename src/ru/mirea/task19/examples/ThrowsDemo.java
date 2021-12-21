@@ -9,14 +9,14 @@ class ThrowsDemo {
         System.out.println("B теле метода throwOne()");
         throw new IllegalAccessException("дeмoнcтpaция");
     }
-    public static void main(String args[J) {
+    public static void ru.mirea.task16.pixelGame.main(String args[J) {
            throwOne();
     }
  }
 
 Чтобы эту программу можно было скомпилировать, в ее исходный код следует внести два изменения.
 Во-первых, объявить в методе throwOne() генерирование исключения типа IllegalAccessException.
-Во-вторых, определить в методе main() блок оператора try/catch для перехвата этого исключения.
+Во-вторых, определить в методе ru.mirea.task16.pixelGame.main() блок оператора try/catch для перехвата этого исключения.
 Ниже приведен исправленный код данной программы.
  */
 

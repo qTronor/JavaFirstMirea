@@ -60,7 +60,7 @@
 package ru.mirea.test;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void ru.mirea.task16.pixelGame.main(String[] args) {
 	// just a comment
     System.out.print("Hi");
     }
